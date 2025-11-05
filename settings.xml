@@ -1,0 +1,10 @@
+<settings>
+    <localRepository>/repo</localRepository>
+    <servers>
+        <server>
+            <id>nexus-releases</id>
+            <username>admin</username>
+            <password>admin</password>
+        </server>
+    </servers>
+</settings>
