@@ -8,7 +8,8 @@ pipeline {
         stage('Commit'){
             steps {
                 echo "Commit stage"
-                sh './mvnw -B package'
+                sh './mvnw help:evaluate -Dexpression=settings.localRepository -q -DforceStdout'
+                //sh './mvnw -B package'
             }
         }
     }
