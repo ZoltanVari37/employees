@@ -10,7 +10,7 @@ pipeline {
             steps {
                 echo "Commit stage"
                 script {
-                    VERSION_NUMBER = sh(script: '.\mvnw help:evaluate "-Dexpression=project.version" -q -Dforceoject.version" -q -DforceStdout',returneStdout: true).trim()
+                    VERSION_NUMBER = sh(script: './mvnw help:evaluate "-Dexpression=project.version" -q -Dforceoject.version" -q -DforceStdout',returneStdout: true).trim()
                 }
                 sh './mvnw -B package'
             }
