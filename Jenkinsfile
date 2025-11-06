@@ -44,15 +44,16 @@ pipeline {
                 }
                 stage('Dependency Check'){
                      steps {
-                        sh "> ./mvnw dependency-check:check"
+                        sh "./mvnw dependency-check:check"
+                    }
+                }
+                stage('Sonar'){
+                    steps{
+                        sh "./mvnw -B sonar:sonar -Dsonar.host.url=http://host.docker.internal:9000 -Dsonar.login=${SONAR_CREDENTIALS_PSW}"
                     }
                 }
             }
         }
-        stage('Sonar'){
-            steps{
-                sh "./mvnw -B sonar:sonar -Dsonar.host.url=http://host.docker.internal:9000 -Dsonar.login=${SONAR_CREDENTIALS_PSW}"
-            }
-        }
+        
     }
 }
