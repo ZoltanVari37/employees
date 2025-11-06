@@ -35,6 +35,20 @@ pipeline {
                 sh "docker push zoltanvari37/employees:latest"
             }
         }
+        stage ('Quality'){
+            parallel{
+                stage('Sonar'){
+                    steps{
+                        sh "./mvnw -B sonar:sonar -Dsonar.host.url=http://host.docker.internal:9000 -Dsonar.login=${SONAR_CREDENTIALS_PSW}"
+                    }
+                }
+                stage('Dependency Check'){
+                     steps {
+                        sh "> ./mvnw dependency-check:check"
+                    }
+                }
+            }
+        }
         stage('Sonar'){
             steps{
                 sh "./mvnw -B sonar:sonar -Dsonar.host.url=http://host.docker.internal:9000 -Dsonar.login=${SONAR_CREDENTIALS_PSW}"
