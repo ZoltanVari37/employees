@@ -15,10 +15,9 @@ pipeline {
         stage('Commit'){
             steps {
                 echo "Commit stage"
-                sh 'mkdir -p /.m2/repository'
+                sh 'mkdir -p /m2/repository'
                 sh 'ls'
-                st 'pwd'
-                sh './mvnw -B clean package -Dmaven.repo.local=/.m2/repository'
+                sh './mvnw -B clean package -Dmaven.repo.local=/m2/repository'
                 sh 'ls'
             }
         }
