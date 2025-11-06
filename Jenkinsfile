@@ -30,7 +30,7 @@ pipeline {
                 sh "docker build -f Dockerfile.layered -t ${IMAGE_NAME} ."
                 sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u=${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
                 sh "docker push ${IMAGE_NAME}"
-                sh "docker tag ${IMAGENAME} zoltanvari37/employees:latest"
+                sh "docker tag ${IMAGE_NAME} zoltanvari37/employees:latest"
                 sh "docker push zoltanvari37/employees:latest"
             }
         }
