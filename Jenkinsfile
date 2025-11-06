@@ -15,7 +15,7 @@ pipeline {
         stage('Commit'){
             steps {
                 echo "Commit stage"
-                sh './mvnw -B clean package -Dmaven.repo.local=/.m2/repository'
+                sh './mvnw -B clean package -Dmaven.repo.local=/m2/repository'
             }
         }
         stage('Acceptence Stage'){

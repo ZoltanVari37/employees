@@ -9,6 +9,7 @@ COPY src src
 RUN --mount=type=cache,target=/root/.m2,rw ./mvnw -B package 
 
 FROM eclipse-temurin:17
+
 COPY --from=build target/employees-1.0.0.jar .
 
 ENTRYPOINT ["/bin/bash"]
