@@ -48,7 +48,7 @@ pipeline {
                 stage('Dependency Check'){
                      steps {
                         echo 'Dependency Check'
-                        //sh "./mvnw dependency-check:check"
+                        sh "./mvnw dependency-check:check"
                     }
                 }
             }
