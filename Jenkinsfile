@@ -13,11 +13,13 @@ pipeline {
     }
     stages{
         stage('Commit'){
+            environment{
+                CURRENT_FOLDER = sh(script: 'pwd',returnStdout: true).trim()
+                M2 = "${CURRENT_FOLDER}/.m2/repository"
+            }
             steps {
                 echo "Commit stage"
                 sh './mvnw -B help:effective-settings > effective-settings.xml'
-                CURRENT_FOLDER = sh(script: 'pwd',returnStdout: true).trim()
-                M2 = "${CURRENT_FOLDER}/.m2/repository"
                 sh "./mvnw -B clean package  -Dmaven.repo.local=${M2}"
             }
         }
