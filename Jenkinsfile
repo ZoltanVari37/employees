@@ -1,6 +1,7 @@
 pipeline {
     environment{
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
+        SONAR_CREDENTIALS = credentials('sonar-credentials')
         VERSION_NUMBER = sh(script: './mvnw help:evaluate "-Dexpression=project.version" -q -DforceStdout',returnStdout: true).trim()
         IMAGE_NAME = "zoltanvari37/employees:${VERSION_NUMBER}"
     }
@@ -33,6 +34,9 @@ pipeline {
                 sh "docker tag ${IMAGE_NAME} zoltanvari37/employees:latest"
                 sh "docker push zoltanvari37/employees:latest"
             }
+        }
+        stage('Sonar'){
+            sh "./mvnw -B sonar:sonar -Dsonar.host.url=http://host.docker.internal:9000 -Dsonar.login=${SONAR_CREDENTIALS_PSW}"
         }
     }
 }
