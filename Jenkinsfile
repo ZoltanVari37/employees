@@ -36,7 +36,9 @@ pipeline {
             }
         }
         stage('Sonar'){
-            sh "./mvnw -B sonar:sonar -Dsonar.host.url=http://host.docker.internal:9000 -Dsonar.login=${SONAR_CREDENTIALS_PSW}"
+            steps{
+                sh "./mvnw -B sonar:sonar -Dsonar.host.url=http://host.docker.internal:9000 -Dsonar.login=${SONAR_CREDENTIALS_PSW}"
+            }
         }
     }
 }
