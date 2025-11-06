@@ -16,7 +16,8 @@ pipeline {
             steps {
                 echo "Commit stage"
                 sh 'ls'
-                sh './mvnw -B clean package'
+                sh './mvnw -B clean package -Dmaven.repo.local=/.m2/repository'
+                sh 'ls'
             }
         }
 
