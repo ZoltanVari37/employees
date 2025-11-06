@@ -16,8 +16,9 @@ pipeline {
             steps {
                 echo "Commit stage"
                 sh './mvnw -B help:effective-settings > effective-settings.xml'
-                sh 'pwd'
-                sh './mvnw -B clean package'
+                CURRENT_FOLDER = sh(script: 'pwd',returnStdout: true).trim()
+                M2 = "${CURRENT_FOLDER}/.m2/repository"
+                sh "./mvnw -B clean package  -Dmaven.repo.local=${M2}"
             }
         }
         stage('Acceptence Stage'){
@@ -29,7 +30,7 @@ pipeline {
         stage('Docker'){
             steps{
                 sh "docker build -f Dockerfile.layered -t ${IMAGE_NAME} ."
-                sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u=${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
+                sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u=$DOCKERHUB_CREDENTIALS_USR --password-stdin"
                 sh "docker push ${IMAGE_NAME}"
                 sh "docker tag ${IMAGE_NAME} zoltanvari37/employees:latest"
                 sh "docker push zoltanvari37/employees:latest"
@@ -39,7 +40,7 @@ pipeline {
             parallel{
                 stage('Sonar'){
                     steps{
-                        sh "./mvnw -B sonar:sonar -Dsonar.host.url=http://host.docker.internal:9000 -Dsonar.login=${SONAR_CREDENTIALS_PSW}"
+                        sh "./mvnw -B sonar:sonar -Dsonar.host.url=http://host.docker.internal:9000 -Dsonar.login=$SONAR_CREDENTIALS_PSW"
                     }
                 }
                 stage('Dependency Check'){
