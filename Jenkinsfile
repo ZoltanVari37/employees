@@ -15,6 +15,7 @@ pipeline {
         stage('Commit'){
             steps {
                 echo "Commit stage"
+                sh './mvnw -B help:effective-settings'
                 sh './mvnw -B clean package'
             }
         }
