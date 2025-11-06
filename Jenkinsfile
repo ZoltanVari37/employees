@@ -26,11 +26,13 @@ pipeline {
             }
         }
         stage('Docker'){
-            sh "docker build -f DOckerfile.layered -t ${IMAGE_NAME}"
-            sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u=${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
-            sh "docker push ${IMAGE_NAME}"
-            sh "docker tag ${IMAGENAME} zoltanvari/employees:latest"
-            sh "docker push zoltanvari/employees:latest"
+            steps{
+                sh "docker build -f DOckerfile.layered -t ${IMAGE_NAME}"
+                sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u=${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
+                sh "docker push ${IMAGE_NAME}"
+                sh "docker tag ${IMAGENAME} zoltanvari/employees:latest"
+                sh "docker push zoltanvari/employees:latest"
+            }
         }
     }
 }
