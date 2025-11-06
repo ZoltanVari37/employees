@@ -8,7 +8,7 @@ pipeline {
     agent {
         dockerfile{   
             filename 'Dockerfile.build'
-            args '-e DCOKER_CONFIG=./docker'
+            args '-e DOCKER_CONFIG=./docker'
         }
     }
     stages{
