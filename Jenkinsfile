@@ -46,9 +46,11 @@ pipeline {
                     }
                 }
                 stage('Dependency Check'){
-                    dockerfile{   
-                        filename 'Dockerfile.dependency'
-                        args '-e DOCKER_CONFIG=./docker'
+                    agent{
+                        dockerfile{   
+                            filename 'Dockerfile.dependency'
+                            args '-e DOCKER_CONFIG=./docker'
+                        }
                     }
                     environment{
                         CURRENT_FOLDER = sh(script: 'pwd',returnStdout: true).trim()
