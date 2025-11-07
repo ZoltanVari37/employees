@@ -46,11 +46,15 @@ pipeline {
                     }
                 }
                 stage('Dependency Check'){
+                    dockerfile{   
+                        filename 'Dockerfile.dependency'
+                        args '-e DOCKER_CONFIG=./docker'
+                    }
                     environment{
                         CURRENT_FOLDER = sh(script: 'pwd',returnStdout: true).trim()
                         M2 = "${CURRENT_FOLDER}/.m2/repository"
                     }
-                     steps {
+                    steps {
                         echo 'Dependency Check'
                         sh "./mvnw dependency-check:check -Dmaven.repo.local=${M2}"
                     }
