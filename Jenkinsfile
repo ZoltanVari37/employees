@@ -50,6 +50,7 @@ pipeline {
                         dockerfile{   
                             filename 'Dockerfile.dependency'
                             args '-e DOCKER_CONFIG=./docker'
+                            reuseNode true
                         }
                     }
                     environment{
