@@ -46,9 +46,13 @@ pipeline {
                     }
                 }
                 stage('Dependency Check'){
+                    environment{
+                        CURRENT_FOLDER = sh(script: 'pwd',returnStdout: true).trim()
+                        M2 = "${CURRENT_FOLDER}/.m2/repository"
+                    }
                      steps {
                         echo 'Dependency Check'
-                        sh "./mvnw dependency-check:check"
+                        sh "./mvnw dependency-check:check -Dmaven.repo.local=${M2}"
                     }
                 }
             }
